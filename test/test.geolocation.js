@@ -1,9 +1,8 @@
-/*jslint node: true */
-/*global describe, it, window, beforeEach, afterEach, Geolocation */
 'use strict';
 
+/* global describe, it, window, beforeEach, afterEach, Geolocation, google */
+
 const expect = require('expect.js');
-const sinon = require('sinon');
 
 /**
  * Unit tests for the Geolocation object
@@ -23,13 +22,12 @@ describe('Geolocation', () => {
   /**
    * @type {String} ADDRESS
    */
-  const ADDRESS = "Calle Domingo Pardo, 11, 28035 Madrid, Spain";
+  const ADDRESS = 'Calle Domingo Pardo, 11, 28035 Madrid, Spain';
 
   /**
    * @method beforeEach
    */
-  beforeEach(function() {
-
+  beforeEach(() => {
     // Simulate the Geolocation namespace
     global.Geolocation = {};
 
@@ -59,27 +57,27 @@ describe('Geolocation', () => {
     global.google.maps.Geocoder.prototype.geocode = (position, callback) => {
       callback([
         {
-          "formatted_address": ADDRESS,
-          "geometry": {
-            "location": {
-              "lat": 40.4753402,
-              "lng": -3.719688000000019
+          formatted_address: ADDRESS,
+          geometry: {
+            location: {
+              lat: 40.4753402,
+              lng: -3.719688000000019
             },
-            "location_type": "ROOFTOP",
-            "viewport": {
-              "south": 40.4739912197085,
-              "west": -3.721036980291501,
-              "north": 40.4766891802915,
-              "east": -3.7183390197085373
+            location_type: 'ROOFTOP',
+            viewport: {
+              south: 40.4739912197085,
+              west: -3.721036980291501,
+              north: 40.4766891802915,
+              east: -3.7183390197085373
             }
           },
-          "place_id": "ChIJr9Wlu5UpQg0RidDkIsItxNA",
-          "types": [
-            "street_address"
+          place_id: 'ChIJr9Wlu5UpQg0RidDkIsItxNA',
+          types: [
+            'street_address'
           ]
         }
       ]);
-    }
+    };
 
     google.maps.LatLng = function() {};
   });
@@ -95,7 +93,6 @@ describe('Geolocation', () => {
   });
 
   describe('Detect geolocation information', () => {
-
     it('Browser without geolocation capability', () => {
       delete global.navigator.geolocation;
       const Geolocation = require('../src/geolocation');
@@ -107,7 +104,6 @@ describe('Geolocation', () => {
         expect(e).to.be.an(Error);
         expect(Geolocation._isEnabled).to.be(false);
       });
-
     });
 
     it('Browser with geolocation capability', (done) => {
@@ -121,13 +117,10 @@ describe('Geolocation', () => {
         expect(position.coords.longitude).to.be(LONGITUDE);
         done();
       });
-
     });
-
   });
 
   describe('Obtain address information', () => {
-
     it('Browser with geolocation capability', (done) => {
       const Geolocation = require('../src/geolocation');
       Geolocation._isEnabled = true;
@@ -137,9 +130,6 @@ describe('Geolocation', () => {
         expect(address).to.be(ADDRESS);
         done();
       });
-
     });
-
   });
-
 });
