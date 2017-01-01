@@ -1,0 +1,30 @@
+{
+  "name": "@tomasperezv/geolocation",
+  "version": "0.1.0",
+  "description": "Retrieve geolocation information, compute distances and paths over geographic coordinates",
+  "main": "src/geolocation.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomasperezv/geolocation.git"
+  },
+  "keywords": [
+    "geographic",
+    "coordinates",
+    "google maps",
+    "geometry"
+  ],
+  "author": "Tomás Pérez <t@0x101.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/tomasperezv/geolocation#readme",
+  "dependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7"
+  }
+}
