@@ -1,6 +1,6 @@
-# geolocation
+# Geolocation
 
-Library for retrieving geolocation informatoin, computing distances and paths over geographic coordinates.
+Library for retrieving geolocation information, computing distances and paths over geographic coordinates.
 
 It provides an abstraction layer based on promises on top of the Google Maps API and the Geolocation HTML API.
 
