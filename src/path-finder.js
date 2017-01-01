@@ -1,4 +1,4 @@
-/*jslint browser: true*/
+/* global google */
 
 /**
  * PathFinder is used to compute distance between geographic points,
@@ -9,8 +9,8 @@
  * @module Geolocation.PathFinder
  * @test ../../../test/test.path-finder.js
  */
-var Geolocation = (function(namespace) {
-  "use strict";
+const Geolocation = (function(namespace) {
+  'use strict';
 
   /**
    * @constructor
@@ -44,13 +44,12 @@ var Geolocation = (function(namespace) {
    * @public
    */
   PathFinder.prototype.filterPathByArrivalTime = function(path, speed, arrival) {
-
     const arrivalDate = new Date(arrival);
     const currentDate = new Date();
 
     const seconds = (arrivalDate.getTime() - currentDate.getTime())/1000;
-    const meters_second = (speed*1000)/3600;
-    const distance = (meters_second*seconds);
+    const metersSecond = (speed * 1000)/3600;
+    const distance = (metersSecond * seconds);
 
     return this.filterPathByDistance(path, distance);
   };
@@ -67,7 +66,6 @@ var Geolocation = (function(namespace) {
    * @public
    */
   PathFinder.prototype.filterPathByDistance = function(path, distance) {
-
     if (path.length < 2) {
       throw new Error('We can not filter a path with less than 1 point.');
     }
@@ -100,11 +98,8 @@ var Geolocation = (function(namespace) {
   };
 
   // Augment the namespace by adding the PathFinder object
-  namespace.PathFinder = PathFinder;
+  namespace.PathFinder = PathFinder; // eslint-disable-line no-param-reassign
   return namespace;
+})(global.Geolocation || {}); // eslint-disable-line no-use-before-define
 
-})(Geolocation || {});
-
-if (typeof module !== 'undefined') {
-  module.exports = Geolocation.PathFinder;
-}
+module.exports = Geolocation.PathFinder;

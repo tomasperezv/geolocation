@@ -26,5 +26,12 @@
     "expect.js": "^0.3.1",
     "mocha": "^3.2.0",
     "sinon": "^1.17.7"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.8.0"
   }
 }

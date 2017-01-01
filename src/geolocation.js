@@ -1,4 +1,4 @@
-/*jslint browser: true*/
+/* global google */
 
 /**
  * Wraps functionality related with navigator.geolocation capabilities.
@@ -7,8 +7,8 @@
  * @module Geolocation.Detector
  * @test ../test/test.detector.js
  */
-var Geolocation = (function(namespace) {
-  "use strict";
+const Geolocation = (function(namespace) {
+  'use strict';
 
   /**
    * @constructor
@@ -17,7 +17,7 @@ var Geolocation = (function(namespace) {
     /**
      * @type {Boolean} _isEnabled
      */
-    this._isEnabled = !!navigator.geolocation;
+    this._isEnabled = 'geolocation' in navigator;
 
     /**
      * Used to cache the last determined position
@@ -53,12 +53,10 @@ var Geolocation = (function(namespace) {
    * @public
    */
   Detector.prototype.detect = function() {
-
     this._assertIsEnabled();
 
     const self = this;
     const promise = new Promise((resolve, reject) => {
-
       navigator.geolocation.getCurrentPosition((position) => {
         // Update the current position
         self._position = {
@@ -92,35 +90,26 @@ var Geolocation = (function(namespace) {
    * @public
    */
   Detector.prototype.detectAddress = function() {
-
     const self = this;
     const promise = new Promise((resolve, reject) => {
-
       const geocoder = new google.maps.Geocoder();
 
       const currentPosition = self.getPositionCoordinates();
-      geocoder.geocode({ 'latLng': currentPosition }, (results, status) => {
-
+      geocoder.geocode({ latLng: currentPosition }, (results) => {
         if (results.length > 0) {
           resolve(results[results.length-1].formatted_address);
         } else {
           reject();
         }
-
       });
-
     });
 
     return promise;
-
   };
 
   // Augment the Geolocation namespace by adding the Detector object
-  namespace.Detector = new Detector();
+  namespace.Detector = new Detector(); // eslint-disable-line no-param-reassign
   return namespace;
+})(global.Geolocation || {});
 
-})(Geolocation || {});
-
-if (typeof module !== 'undefined') {
-  module.exports = Geolocation.Detector;
-}
+module.exports = Geolocation.Detector;
